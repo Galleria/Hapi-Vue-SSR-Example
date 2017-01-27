@@ -3,7 +3,24 @@
 
     const Home = { template: '<div>home</div>' }
     const Foo = { template: '<div>foo</div>' }
-    const Bar = { template: '<div>bar</div>' }
+    const Bar = { template: '<div>bar {{test}}</div>', 
+    data : function(){
+      return {
+        test : ''
+      }
+    },
+                  created : function(){
+                    var vm = this
+                    axios.get('/user/client')
+                      .then(function (response) {
+                        console.log(response);
+                        vm.test = response.data
+                      })
+                      .catch(function (error) {
+                        console.log(error);
+                      });
+                  } 
+    }
     
     const router = new VueRouter({
       mode: 'history',
@@ -24,6 +41,7 @@
                       <ul>
                           <li><router-link to="/">/</router-link></li>
                           <li><router-link to="/foo">/foo</router-link></li>
+                          <li><router-link to="/bar">/bar</router-link></li>
                       </ul>
                       <div>You have been here for {{ counter }} seconds.</div>
                       <router-view></router-view>

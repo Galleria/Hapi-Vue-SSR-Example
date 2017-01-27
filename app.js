@@ -32,6 +32,16 @@ server.route({
 
 server.route({
     method: 'GET',
+    path: '/user/{id?}',
+    handler: function (request, reply) {
+        console.log('request.params.id', request.params.id )
+        reply('userId is : ' + request.params.id)
+    }
+});
+
+
+server.route({
+    method: 'GET',
     path:'/{path*}', 
     handler: function (request, reply) {
         //renderer.renderToString( app , function (error, html) {
